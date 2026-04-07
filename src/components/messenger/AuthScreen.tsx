@@ -37,7 +37,7 @@ export default function AuthScreen({ onAuth }: AuthScreenProps) {
         return;
       }
 
-      localStorage.setItem("pulse_token", data.token);
+      localStorage.setItem("sevas_token", data.token);
       onAuth(data.token, data.user);
     } catch {
       setError("Ошибка сети. Попробуйте ещё раз");
@@ -58,12 +58,12 @@ export default function AuthScreen({ onAuth }: AuthScreenProps) {
       <div className="relative w-full max-w-sm animate-scale-in">
         {/* Logo */}
         <div className="flex flex-col items-center mb-8 gap-3">
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-cyan-500 flex items-center justify-center neon-purple">
-            <span className="text-white font-black text-2xl">P</span>
+          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-violet-500 to-fuchsia-600 flex items-center justify-center" style={{ boxShadow: "0 0 30px rgba(139,92,246,0.5)" }}>
+            <span className="text-white font-black text-2xl">S</span>
           </div>
           <div className="text-center">
-            <h1 className="text-3xl font-black text-white tracking-tight">Pulse</h1>
-            <p className="text-muted-foreground text-sm mt-1">Мессенджер нового поколения</p>
+            <h1 className="text-3xl font-black text-white tracking-tight">Sevas</h1>
+            <p className="text-muted-foreground text-sm mt-1">Общайтесь. Создавайте. Объединяйтесь.</p>
           </div>
         </div>
 

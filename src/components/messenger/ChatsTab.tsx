@@ -1,5 +1,7 @@
 import { useState } from "react";
-import type { Chat } from "@/pages/Index";
+import type { Contact } from "@/lib/constants";
+interface Message { id: number; from: "me" | "them"; text?: string; type: "text" | "voice"; duration?: number; time: string; }
+interface Chat { id: number; contact: Contact; messages: Message[]; unread: number; }
 import Avatar from "./Avatar";
 import Icon from "@/components/ui/icon";
 

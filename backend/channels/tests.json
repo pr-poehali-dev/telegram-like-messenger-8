@@ -1,0 +1,20 @@
+{
+  "tests": [
+    {
+      "name": "List channels unauthorized",
+      "method": "GET",
+      "path": "/?action=list",
+      "expectedStatus": 401,
+      "expectedBody": {"error": "string"},
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Explore channels unauthorized",
+      "method": "GET",
+      "path": "/?action=explore",
+      "expectedStatus": 401,
+      "expectedBody": {"error": "string"},
+      "bodyMatcher": "partial"
+    }
+  ]
+}

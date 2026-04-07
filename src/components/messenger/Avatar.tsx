@@ -1,5 +1,5 @@
-import { avatarColors } from "@/pages/Index";
-import type { Contact } from "@/pages/Index";
+import { avatarColors } from "@/lib/constants";
+import type { Contact } from "@/lib/constants";
 
 interface AvatarProps {
   contact: Contact;

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import type { Contact } from "@/pages/Index";
-import { avatarColors } from "@/pages/Index";
+import type { Contact } from "@/lib/constants";
+import { avatarColors } from "@/lib/constants";
 import Icon from "@/components/ui/icon";
 
 interface VoiceCallModalProps {

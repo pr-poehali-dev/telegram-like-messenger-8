@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { Contact } from "@/pages/Index";
+import type { Contact } from "@/lib/constants";
 import Avatar from "./Avatar";
 import Icon from "@/components/ui/icon";
 

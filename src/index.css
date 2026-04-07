@@ -34,8 +34,10 @@
 
     --radius: 1rem;
 
-    /* Neon colors */
+    /* Sevas brand colors */
     --neon-purple: #8b5cf6;
+    --neon-violet: #7c3aed;
+    --neon-fuchsia: #d946ef;
     --neon-cyan: #06b6d4;
     --neon-pink: #ec4899;
     --neon-green: #10b981;
@@ -115,19 +117,19 @@
   .gradient-bg {
     background:
       radial-gradient(
-        ellipse at 20% 50%,
-        rgba(139, 92, 246, 0.15) 0%,
-        transparent 60%
+        ellipse at 15% 40%,
+        rgba(124, 58, 237, 0.18) 0%,
+        transparent 55%
       ),
       radial-gradient(
-        ellipse at 80% 20%,
-        rgba(6, 182, 212, 0.1) 0%,
-        transparent 60%
+        ellipse at 85% 15%,
+        rgba(217, 70, 239, 0.12) 0%,
+        transparent 55%
       ),
       radial-gradient(
-        ellipse at 60% 80%,
-        rgba(236, 72, 153, 0.08) 0%,
-        transparent 60%
+        ellipse at 55% 85%,
+        rgba(139, 92, 246, 0.1) 0%,
+        transparent 55%
       ),
       hsl(var(--background));
   }

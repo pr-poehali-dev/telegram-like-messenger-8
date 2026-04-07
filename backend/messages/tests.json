@@ -1,0 +1,20 @@
+{
+  "tests": [
+    {
+      "name": "Get users unauthorized",
+      "method": "GET",
+      "path": "/?action=users",
+      "expectedStatus": 401,
+      "expectedBody": {"error": "string"},
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Get dialogs unauthorized",
+      "method": "GET",
+      "path": "/?action=dialogs",
+      "expectedStatus": 401,
+      "expectedBody": {"error": "string"},
+      "bodyMatcher": "partial"
+    }
+  ]
+}
