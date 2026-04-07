@@ -1,10 +1,17 @@
 import { useState } from "react";
 import Icon from "@/components/ui/icon";
 
-export default function ProfileTab() {
-  const [name, setName] = useState("Алексей Смирнов");
-  const [about, setAbout] = useState("Разрабатываю крутые приложения 🚀");
+interface ProfileTabProps {
+  user: { id: number; name: string; username: string; about: string } | null;
+  onLogout: () => void;
+}
+
+export default function ProfileTab({ user, onLogout }: ProfileTabProps) {
+  const [name, setName] = useState(user?.name || "");
+  const [about, setAbout] = useState(user?.about || "");
   const [editing, setEditing] = useState(false);
+
+  const initials = name.split(" ").map(w => w[0]).slice(0, 2).join("").toUpperCase() || "?";
 
   const notifications = [
     { label: "Сообщения", enabled: true },
@@ -21,7 +28,7 @@ export default function ProfileTab() {
         <div className="flex flex-col items-center gap-3 mb-4">
           <div className="relative">
             <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-cyan-500 flex items-center justify-center font-black text-white text-xl neon-purple">
-              АС
+              {initials}
             </div>
             <button className="absolute -bottom-1 -right-1 w-6 h-6 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-lg">
               <Icon name="Camera" size={11} className="text-white" />
@@ -37,6 +44,7 @@ export default function ProfileTab() {
               <input
                 value={about}
                 onChange={e => setAbout(e.target.value)}
+                placeholder="О себе..."
                 className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-xs text-muted-foreground text-center outline-none"
               />
               <button
@@ -50,7 +58,10 @@ export default function ProfileTab() {
             <>
               <div className="text-center">
                 <div className="font-bold text-white">{name}</div>
-                <div className="text-xs text-muted-foreground mt-0.5">{about}</div>
+                {user?.username && (
+                  <div className="text-xs text-purple-400 mt-0.5">@{user.username}</div>
+                )}
+                {about && <div className="text-xs text-muted-foreground mt-1">{about}</div>}
               </div>
               <button
                 onClick={() => setEditing(true)}
@@ -83,10 +94,7 @@ export default function ProfileTab() {
       </div>
       <div className="mx-3 glass rounded-2xl border border-white/8 overflow-hidden mb-3">
         {notifs.map((n, i) => (
-          <div
-            key={i}
-            className="flex items-center justify-between px-4 py-3 border-b border-white/5 last:border-0"
-          >
+          <div key={i} className="flex items-center justify-between px-4 py-3 border-b border-white/5 last:border-0">
             <span className="text-sm text-white">{n.label}</span>
             <button
               onClick={() => setNotifs(prev => prev.map((p, idx) => idx === i ? { ...p, enabled: !p.enabled } : p))}
@@ -110,7 +118,10 @@ export default function ProfileTab() {
           <span className="text-sm text-white">Поддержка</span>
           <Icon name="ChevronRight" size={14} className="text-muted-foreground ml-auto" />
         </button>
-        <button className="w-full flex items-center gap-3 px-4 py-3 glass rounded-2xl border border-red-500/20 hover:bg-red-500/10 transition-all">
+        <button
+          onClick={onLogout}
+          className="w-full flex items-center gap-3 px-4 py-3 glass rounded-2xl border border-red-500/20 hover:bg-red-500/10 transition-all"
+        >
           <Icon name="LogOut" size={16} className="text-red-400" />
           <span className="text-sm text-red-400">Выйти из аккаунта</span>
         </button>

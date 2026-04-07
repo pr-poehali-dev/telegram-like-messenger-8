@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ChatsTab from "@/components/messenger/ChatsTab";
 import ContactsTab from "@/components/messenger/ContactsTab";
 import StatusTab from "@/components/messenger/StatusTab";
 import ProfileTab from "@/components/messenger/ProfileTab";
 import ChatWindow from "@/components/messenger/ChatWindow";
 import VoiceCallModal from "@/components/messenger/VoiceCallModal";
+import AuthScreen from "@/components/messenger/AuthScreen";
 import Icon from "@/components/ui/icon";
+
+const AUTH_URL = "https://functions.poehali.dev/60703da4-36e2-4c04-a1c9-13f3909521a0";
 
 type Tab = "chats" | "contacts" | "status" | "profile";
 
@@ -98,6 +101,44 @@ export default function Index() {
   const [activeChat, setActiveChat] = useState<Chat | null>(null);
   const [chats, setChats] = useState<Chat[]>(initialChats);
   const [callTarget, setCallTarget] = useState<Contact | null>(null);
+  const [authUser, setAuthUser] = useState<{ id: number; name: string; username: string; about: string } | null>(null);
+  const [authChecked, setAuthChecked] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("pulse_token");
+    if (!token) { setAuthChecked(true); return; }
+    fetch(`${AUTH_URL}?action=me`, {
+      headers: { "Authorization": `Bearer ${token}` },
+    })
+      .then(r => r.json())
+      .then(data => {
+        if (data.id) setAuthUser(data);
+      })
+      .catch(() => {})
+      .finally(() => setAuthChecked(true));
+  }, []);
+
+  if (!authChecked) {
+    return (
+      <div className="gradient-bg h-screen flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-purple-500/30 border-t-purple-500 rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  if (!authUser) {
+    return (
+      <AuthScreen onAuth={(token, user) => {
+        localStorage.setItem("pulse_token", token);
+        setAuthUser(user);
+      }} />
+    );
+  }
+
+  const handleLogout = () => {
+    localStorage.removeItem("pulse_token");
+    setAuthUser(null);
+  };
 
   const openChat = (chat: Chat) => {
     setChats(prev => prev.map(c => c.id === chat.id ? { ...c, unread: 0 } : c));
@@ -155,7 +196,7 @@ export default function Index() {
             }} />
           )}
           {activeTab === "status" && <StatusTab contacts={contacts} />}
-          {activeTab === "profile" && <ProfileTab />}
+          {activeTab === "profile" && <ProfileTab user={authUser} onLogout={handleLogout} />}
         </div>
 
         {/* Bottom Nav */}
